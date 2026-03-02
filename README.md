@@ -23,7 +23,7 @@ Fake Player — Player Exists: False, Team Correct: False
 Python  
 FastAPI  
 Uvicorn  
-JavaScriptz
+JavaScript  
 HTML  
 
 ## Running the Project
