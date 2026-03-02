@@ -5,51 +5,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MLB Player Validator</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <style>
+        /* Reset some default styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Roboto', sans-serif;
+            /* Slightly toned-down gradient background */
+            background: linear-gradient(to right, rgba(0, 198, 255, 0.6), rgba(0, 114, 255, 0.6));
+            color: #333;
+            padding: 40px;
+            line-height: 1.6;
         }
 
         h2 {
-            color: #333;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1rem;
+            color: white;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        pre {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            font-size: 1rem;
         }
 
         textarea {
-            font-family: monospace;
-            font-size: 16px;
+            width: 100%;
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: vertical;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.4);
+        }
+
+        button {
+            background-color: #2980b9; /* Darker blue for more contrast */
+            color: white;
+            font-size: 1.2rem;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            background-color: #1f639b; /* Slightly darker blue */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: white;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         th, td {
-            padding: 8px;
+            padding: 14px;
             text-align: left;
+            font-size: 1.1rem;
         }
 
+        /* Darker background for table header to create contrast */
         th {
-            background-color: #f4f4f4;
+            background-color: #2c3e50; /* Dark blue-gray */
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .valid {
-            background-color: #d4edda; /* green */
-            color: #155724;
+        td {
+            background-color: white;
+            border-bottom: 1px solid #ccc;
         }
 
-        .invalid {
-            background-color: #f8d7da; /* red */
-            color: #721c24;
+        tr:hover td {
+            background-color: #ecf0f1;
+        }
+
+        /* Valid team (light green) */
+        .valid td {
+            background-color: rgba(122, 255, 133, 1); /* light green with low opacity */
+            color: #155724; /* dark green text for contrast */
+            font-weight: 600;
+        }
+
+        /* Invalid team (light red) */
+        .invalid td {
+            background-color: rgb(255, 131, 141, 1); /* light red with low opacity */
+            color: #721c24; /* dark red text for contrast */
+            font-weight: 600;
         }
 
         .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            text-align: center;
+            font-size: 1.2rem;
             margin-top: 20px;
         }
     </style>
@@ -70,7 +168,7 @@ Aaron Judge, Yankees
 </pre>
 
 <!-- Textarea where the user can input player data -->
-<textarea id="input" rows="10" cols="40"></textarea>
+<textarea id="input" rows="10" placeholder="Enter player data here..."></textarea>
 
 <br><br>
 
