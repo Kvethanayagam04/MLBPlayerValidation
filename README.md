@@ -8,23 +8,23 @@ Users provide a list of players and teams, and the system returns validation res
 
 Example input:
 
-Shohei Ohtani, Dodgers
-Mike Trout, Yankees
-Fake Player, Blue Jays
+Shohei Ohtani, Dodgers  
+Mike Trout, Yankees  
+Fake Player, Blue Jays  
 
 Example output:
 
-Shohei Ohtani — Player Exists: True, Team Correct: True
-Mike Trout — Player Exists: True, Team Correct: False
-Fake Player — Player Exists: False, Team Correct: False
+Shohei Ohtani — Player Exists: True, Team Correct: True  
+Mike Trout — Player Exists: True, Team Correct: False  
+Fake Player — Player Exists: False, Team Correct: False  
 
 ## Technologies Used
 
-Python
-FastAPI
-Uvicorn
-JavaScript (Fetch API)
-HTML
+Python  
+FastAPI  
+Uvicorn  
+JavaScriptz
+HTML  
 
 ## Running the Project
 
