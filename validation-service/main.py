@@ -2,20 +2,6 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from mlb_db import player_exists, team_correct
 
-"""
-Make sure to run uvicorn app from within validation-service directory or else "mlb_db" will not be visible.
-Run 'uvicorn main:app --reload'
-Test at 'http://127.0.0.1:8000/docs'
-Test request:
-{
- "players":[
-  {"name":"Shohei Ohtani","team":"Dodgers"},
-  {"name":"Mike Trout","team":"Yankees"},
-  {"name":"Fake Player","team":"Blue Jays"}
- ]
-}
-"""
-
 # Create instance of FastAPI app
 app = FastAPI()
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<!-- Heading for the page -->
+<h2>MLB Player Validator</h2>
+
+<!-- Instructions for user -->
+<p>Enter players in this format:</p>
+
+<pre>
+Shohei Ohtani, Dodgers
+Mike Trout, Angels
+Aaron Judge, Yankees
+</pre>
+
+<!-- Textarea where the user can input player data -->
+<textarea id="input" rows="10" cols="40"></textarea>
+
+<br><br>
+
+<!-- Button that triggers the validation function when clicked -->
+ <button onclick="validate()">Validate</button>
+
+<!-- Heading for displaying the results -->
+<h3>Results</h3>
+
+<!-- Section to display the validation results -->
+<pre id="results"></pre>
+
+<script>
+
+async function validate(){
+
+    // Get the raw input value from the textarea and split it by new lines
+    let raw = document
+        .getElementById("input")
+        .value
+        .split("\n")
+
+    // Process each line of input to separate the player name and team
+    let players = raw.map(line => {
+
+        // Split each line by comma and space to separate name and team
+        let parts = line.split(", ")
+
+        // Return an object with the player name and team
+        return {
+            name: parts[0],
+            team: parts[1]
+        }
+
+    })
+
+    // Make an asynchronous POST request to the server with the players' data
+    let response = await fetch(
+        "http://localhost:5000/check_players",
+        {
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            // Send the players data as a JSON string in the body of the request
+            body: JSON.stringify({
+                players: players
+            })
+        }
+    )
+
+    // Wait for the server response and convert it to JSON format
+    let data = await response.json()
+
+    // Display the server response (validation results) in the 'results' section
+    document
+        .getElementById("results")
+        .textContent = JSON.stringify(data,null,2)
+}
+
+</script>
+</body>
+</html>
