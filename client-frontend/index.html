@@ -1,6 +1,60 @@
 <!DOCTYPE html>
 <html>
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLB Player Validator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        textarea {
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .valid {
+            background-color: #d4edda; /* green */
+            color: #155724;
+        }
+
+        .invalid {
+            background-color: #f8d7da; /* red */
+            color: #721c24;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
 <body>
 
 <!-- Heading for the page -->
@@ -21,13 +75,27 @@ Aaron Judge, Yankees
 <br><br>
 
 <!-- Button that triggers the validation function when clicked -->
- <button onclick="validate()">Validate</button>
+<div>
+    <button onclick="validate()">Validate</button>
+</div>
 
 <!-- Heading for displaying the results -->
 <h3>Results</h3>
 
 <!-- Section to display the validation results -->
-<pre id="results"></pre>
+<table id="resultsTable">
+    <thead>
+        <tr>
+            <th>Player Name</th>
+            <th>Team</th>
+            <th>Player Exists</th>
+            <th>Team Correct</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Results will be inserted here -->
+    </tbody>
+</table>
 
 <script>
 
@@ -37,7 +105,7 @@ async function validate(){
     let raw = document
         .getElementById("input")
         .value
-        .split("\n")
+        .split("\n");
 
     // Process each line of input to separate the player name and team
     let players = raw.map(line => {
@@ -51,7 +119,7 @@ async function validate(){
             team: parts[1]
         }
 
-    })
+    });
 
     // Make an asynchronous POST request to the server with the players' data
     let response = await fetch(
@@ -66,15 +134,42 @@ async function validate(){
                 players: players
             })
         }
-    )
+    );
 
     // Wait for the server response and convert it to JSON format
-    let data = await response.json()
+    let data = await response.json();
 
-    // Display the server response (validation results) in the 'results' section
-    document
-        .getElementById("results")
-        .textContent = JSON.stringify(data,null,2)
+    console.log("Server Response:", data);
+
+    // Get the table body elemnt to insert results
+    let resultsTableBody = document.getElementById("resultsTable").getElementsByTagName('tbody')[0];
+
+    // Clear previous results in the table
+    resultsTableBody.innerHTML = '';
+
+    // Loop through the validation data and display results
+    data.results.forEach(player => {
+        let row = resultsTableBody.insertRow();
+
+        let nameCell = row.insertCell(0);
+        nameCell.textContent = player.name;
+
+        let teamCell = row.insertCell(1);
+        teamCell.textContent = player.team;
+
+        let existsCell = row.insertCell(2);
+        existsCell.textContent = player.player_exists ? "Yes" : "No";
+
+        let teamCorrectCell = row.insertCell(3);
+        teamCorrectCell.textContent = player.team_correct ? "Yes" : "No";
+
+        // Apply validation result colour based on team correctness
+        if (player.team_correct) {
+            row.classList.add("valid");
+        } else {
+            row.classList.add("invalid");
+        }
+    });
 }
 
 </script>
